@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../utils/constants";
-
 interface LoginData {
     email: string;
     password: string;
@@ -31,7 +30,7 @@ const loginUser = async (
 
         // Send a POST request to the API
         const response = await axios.post(BASE_URL + "/login", loginData, {
-            withCredentials: true, 
+            withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -56,14 +55,20 @@ const loginUser = async (
 };
 
 const Login = () => {
-    const [email, setEmail] = useState("aman@gmail.com");
-    const [password, setPassword] = useState("Aman@123");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [location, setLocation] = useState<GeolocationCoordinates | null>(
         null
     );
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
+        setLoading(true);
+        if(!email || !password) {
+            setLoading(false);
+            return;
+        }
 
         // Get user's current location (optional)
         navigator.geolocation.getCurrentPosition((position) => {
@@ -74,6 +79,9 @@ const Login = () => {
             console.log("User logged in successfully");
         } catch (error) {
             console.error("Login error:", error);
+        }
+        finally{
+          setLoading(false);
         }
     };
 
@@ -106,7 +114,7 @@ const Login = () => {
                     </label>
                     <div className="card-actions justify-center my-5">
                         <button
-                            className="btn btn-primary"
+                            className= {loading ? "disabled" : "btn btn-primary"}
                             onClick={handleLogin}
                         >
                             Submit
@@ -114,8 +122,9 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </div>
-    );
+    </div>
+  );
 };
+
 
 export default Login;
