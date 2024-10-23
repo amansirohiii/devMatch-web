@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 interface LoginData {
     email: string;
     password: string;
@@ -46,6 +48,7 @@ const loginUser = async (
         // Handle the error
         if (axios.isAxiosError(error)) {
             console.error("Login failed:", error.response?.data);
+            toast.error(error.response?.data.message || "Login failed");
             throw new Error(error.response?.data.message || "Login failed");
         } else {
             console.error("Login failed:", error);
@@ -53,7 +56,20 @@ const loginUser = async (
         }
     }
 };
+const checkAuth = async () => {
+    try {
+      const response = await axios.get(BASE_URL + "/check-auth", {
+        withCredentials: true,
+      });
 
+      if (response.status === 200) {
+        return response.data; // Return user data if authenticated
+      }
+    } catch (error) {
+      console.error("User not authenticated:", error);
+      return null;
+    }
+  };
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -61,12 +77,24 @@ const Login = () => {
         null
     );
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    useEffect(() => {
+        // Check if the user is already authenticated on component mount
+        const fetchAuth = async () => {
+          const user = await checkAuth();
+          if (user) {
+            navigate("/profile");
+          }
+        };
+        fetchAuth();
+      }, );
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
         if(!email || !password) {
             setLoading(false);
+            toast.dark("Enter Email and Password");
             return;
         }
 
