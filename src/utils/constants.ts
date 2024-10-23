@@ -1,2 +1,4 @@
-// export const BASE_URL = "https://devmatch.up.railway.app";
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL =
+    process.env.NODE_ENV === "production"
+        ? "https://devmatch.up.railway.app"
+        : "http://localhost:3000";
