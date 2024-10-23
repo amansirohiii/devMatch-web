@@ -4,6 +4,7 @@ import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Feed from "./components/Feed";
 import { useAppSelector } from "./hooks/redux";
+import Signup from "./components/Signup";
 
 function App() {
   const theme = useAppSelector((state) => state.theme.theme);
@@ -14,6 +15,7 @@ function App() {
             <Route path = "/" element={<Body/>}>
             <Route path = "/" element={<Feed/>}/>
             <Route path = "/login" element={<Login/>}/>
+            <Route path = "/signup" element={<Signup/>}/>
             <Route path = "/profile" element={<Profile/>}/>
             <Route path = "/feed" element={<Feed/>}/>
             </Route>

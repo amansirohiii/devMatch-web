@@ -1,76 +1,11 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../utils/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../utils/redux/userSlice";
 import { useAppDispatch } from "../hooks/redux";
-interface LoginData {
-    email: string;
-    password: string;
-    location?: {
-        longitude: number;
-        latitude: number;
-    };
-}
+import { checkAuth, loginUser } from "../utils/auth";
 
-const loginUser = async (
-    email: string,
-    password: string,
-    location?: GeolocationCoordinates
-) => {
-    try {
-        // Prepare the login data
-        const loginData: LoginData = {
-            email,
-            password,
-            location: location
-                ? {
-                      longitude: location.longitude,
-                      latitude: location.latitude,
-                  }
-                : undefined,
-        };
 
-        // Send a POST request to the API
-        const response = await axios.post(BASE_URL + "/login", loginData, {
-            withCredentials: true,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        // Handle the response
-        if (response.status === 200) {
-            toast.success("Login successful");
-            return response.data; // Return response data if needed
-        }
-    } catch (error: unknown) {
-        // Handle the error
-        if (axios.isAxiosError(error)) {
-            console.error("Login failed:", error.response?.data);
-            toast.error(error.response?.data.message || "Login failed");
-            throw new Error(error.response?.data.message || "Login failed");
-        } else {
-            console.error("Login failed:", error);
-            throw new Error("An unexpected error occurred");
-        }
-    }
-};
-const checkAuth = async () => {
-    try {
-      const response = await axios.get(BASE_URL + "/check-auth", {
-        withCredentials: true,
-      });
-      if (response.status === 200) {
-        return response.data; // Return user data if authenticated
-      }
-      else{
-        return null
-      }
-    } catch (error) {
-      return null;
-    }
-  };
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
