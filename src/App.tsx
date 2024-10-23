@@ -3,10 +3,12 @@ import Body from "./components/Body";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Feed from "./components/Feed";
+import { useAppSelector } from "./hooks/redux";
 
 function App() {
+  const theme = useAppSelector((state) => state.theme.theme);
     return (
-        <>
+        <div data-theme={theme}>
           <BrowserRouter basename="/">
           <Routes>
             <Route path = "/" element={<Body/>}>
@@ -18,7 +20,7 @@ function App() {
           </Routes>
 
             </BrowserRouter>
-        </>
+        </div>
     );
 }
 

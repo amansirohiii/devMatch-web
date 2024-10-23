@@ -1,5 +1,6 @@
 import { useAppSelector } from "../hooks/redux";
 import { useLogout } from "../hooks/useLogout";
+import toggleTheme from "./ui/ToggleTheme";
 
 const Navbar = () => {
   const user = useAppSelector((store) => store.user);
@@ -17,7 +18,7 @@ const Navbar = () => {
     {/* <div className="form-control">
       <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
     </div> */}
-
+{toggleTheme()}
     <div className="dropdown dropdown-end mx-5">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
