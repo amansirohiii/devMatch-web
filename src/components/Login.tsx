@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../utils/redux/userSlice";
+import { useAppDispatch } from "../hooks/redux";
 interface LoginData {
     email: string;
     password: string;
@@ -37,11 +39,9 @@ const loginUser = async (
                 "Content-Type": "application/json",
             },
         });
-
         // Handle the response
         if (response.status === 200) {
-            console.log("Login successful:", response.data);
-
+            toast.success("Login successful");
             return response.data; // Return response data if needed
         }
     } catch (error: unknown) {
@@ -61,12 +61,13 @@ const checkAuth = async () => {
       const response = await axios.get(BASE_URL + "/check-auth", {
         withCredentials: true,
       });
-
       if (response.status === 200) {
         return response.data; // Return user data if authenticated
       }
+      else{
+        return null
+      }
     } catch (error) {
-      console.error("User not authenticated:", error);
       return null;
     }
   };
@@ -78,16 +79,18 @@ const Login = () => {
     );
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     useEffect(() => {
         // Check if the user is already authenticated on component mount
         const fetchAuth = async () => {
           const user = await checkAuth();
           if (user) {
-            navigate("/profile");
+            dispatch(setUser(user.data));
+            // navigate("/feed");
           }
         };
         fetchAuth();
-      }, );
+      },  [navigate]);
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -103,7 +106,8 @@ const Login = () => {
             setLocation(position.coords);
         });
         try {
-            await loginUser(email, password, location || undefined);
+            const user = await loginUser(email, password, location || undefined);
+            dispatch(setUser(user.data));
             console.log("User logged in successfully");
         } catch (error) {
             console.error("Login error:", error);
