@@ -4,7 +4,6 @@ import { setTheme } from "../../utils/redux/themeSlice";
 const ToggleTheme = () => {
   const dispatch = useAppDispatch();
   const theme = useAppSelector((state) => state.theme.theme);
-
   const handleToggle = () => {
     dispatch(setTheme( theme === "light" ? "dark" : "light")); // Dispatch the toggleTheme action
   };

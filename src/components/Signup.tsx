@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useAppDispatch } from '../hooks/redux';
 import { signUpUser, checkAuth } from '../utils/auth';
 import { setUser } from '../utils/redux/userSlice';
+import { useLocation } from "../hooks/useLocation";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -15,8 +16,10 @@ const Signup = () => {
   const [photo, setPhoto] = useState<File | null>(null); // Store the file itself
   const [about, setAbout] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
-  const [location, setLocation] = useState<GeolocationCoordinates | null>(null);
+  // const [location, setLocation] = useState<GeolocationCoordinates | null>(null);
   const [loading, setLoading] = useState(false);
+  const userLocation = useLocation();
+
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -26,7 +29,7 @@ const Signup = () => {
       const user = await checkAuth();
       if (user) {
         dispatch(setUser(user.data));
-        // navigate("/feed");
+        navigate("/feed");
       }
     };
     fetchAuth();
@@ -40,13 +43,8 @@ const Signup = () => {
       toast.dark("All fields are required");
       return;
     }
-
-    // Get user's current location
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLocation(position.coords);
-  });
-
     try {
+      const location = await userLocation;
       const user = await signUpUser({
         firstName,
         lastName,
@@ -61,6 +59,7 @@ const Signup = () => {
       });
       dispatch(setUser(user.data));
       console.log("User signed up successfully");
+      navigate("/login");
     } catch (error) {
       console.error("Signup error:", error);
     } finally {

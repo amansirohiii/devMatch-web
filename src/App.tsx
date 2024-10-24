@@ -7,7 +7,8 @@ import { useAppSelector } from "./hooks/redux";
 import Signup from "./components/Signup";
 
 function App() {
-  const theme = useAppSelector((state) => state.theme.theme);
+  let theme = useAppSelector((state) => state.theme.theme);
+  theme = localStorage.getItem("theme") || theme;
     return (
         <div data-theme={theme}>
           <BrowserRouter basename="/">

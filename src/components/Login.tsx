@@ -4,28 +4,31 @@ import { useNavigate } from "react-router-dom";
 import { setUser } from "../utils/redux/userSlice";
 import { useAppDispatch } from "../hooks/redux";
 import { checkAuth, loginUser } from "../utils/auth";
+import { useLocation } from "../hooks/useLocation";
 
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [location, setLocation] = useState<GeolocationCoordinates | null>(
-        null
-    );
+    // const [location, setLocation] = useState<GeolocationCoordinates | null>(
+    //     null
+    // );
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const userLocation = useLocation();
     useEffect(() => {
         // Check if the user is already authenticated on component mount
         const fetchAuth = async () => {
           const user = await checkAuth();
           if (user) {
             dispatch(setUser(user.data));
-            // navigate("/feed");
+            navigate("/feed");
           }
         };
         fetchAuth();
-      },  [navigate]);
+      },  [navigate, dispatch]);
+
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -36,14 +39,13 @@ const Login = () => {
             return;
         }
 
-        // Get user's current location (optional)
-        navigator.geolocation.getCurrentPosition((position) => {
-            setLocation(position.coords);
-        });
+        const location = await userLocation;
+
         try {
             const user = await loginUser(email, password, location || undefined);
             dispatch(setUser(user.data));
             console.log("User logged in successfully");
+            navigate("/feed");
         } catch (error) {
             console.error("Login error:", error);
         }
