@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Bounce, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useAppDispatch } from "../hooks/redux";
@@ -37,7 +37,10 @@ const Body = () => {
     return (
         <>
             <Navbar />
+            <div className="min-h-screen">
             <Outlet />
+
+            </div>
             <Footer />
             <ToastContainer
                 position="bottom-right"

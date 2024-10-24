@@ -3,7 +3,7 @@ import { BASE_URL } from "./constants";
 import { toast } from "react-toastify";
 
 
-interface LoginData {
+export interface LoginData {
   email: string;
   password: string;
   location?: {
@@ -11,7 +11,7 @@ interface LoginData {
       latitude: number;
   };
 }
-interface SignupData {
+export interface SignupData {
   firstName: string;
   lastName: string;
   email: string;
@@ -25,6 +25,21 @@ interface SignupData {
       coordinates: [number, number];
   };
   about: string;
+}
+
+export interface PatchData {
+  firstName?: string;
+  lastName?: string;
+  password?: string;
+  age?: number;
+  gender?: string;
+  image?: File | null;
+  skills?: string[];
+  location?: {
+      type: string;
+      coordinates: [number, number];
+  };
+  about?: string;
 }
 
 export const checkAuth = async () => {
@@ -107,6 +122,30 @@ export const signUpUser = async (userData: SignupData) => {
       throw new Error(error.response?.data.message || "Signup failed");
     } else {
       console.error("Signup failed:", error);
+      throw new Error("An unexpected error occurred");
+    }
+  }
+}
+export const patchUser = async (userData: PatchData) => {
+  try {
+    const response = await axios.patch(BASE_URL + "/profile", userData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+
+    });
+    if (response.status === 200) {
+      toast.success("Updated successfully");
+      return response.data;
+    }
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error("Update failed:", error.response?.data);
+      toast.error(error.response?.data.message || "Update failed");
+      throw new Error(error.response?.data.message || "Update failed");
+    } else {
+      console.error("Update failed:", error);
       throw new Error("An unexpected error occurred");
     }
   }

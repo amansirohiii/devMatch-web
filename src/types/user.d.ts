@@ -1,6 +1,7 @@
 export interface User {
   firstName: string;
   lastName: string;
+  email: string;
   photoUrl: string;
   age: number | null;
   gender: string;
@@ -9,4 +10,6 @@ export interface User {
   location?: {
     type: string;
     coordinates: [number | null, number | null];
-  }};
+  }
+  distance?: float
+};

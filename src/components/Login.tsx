@@ -44,7 +44,6 @@ const Login = () => {
         try {
             const user = await loginUser(email, password, location || undefined);
             dispatch(setUser(user.data));
-            console.log("User logged in successfully");
             navigate("/feed");
         } catch (error) {
             console.error("Login error:", error);

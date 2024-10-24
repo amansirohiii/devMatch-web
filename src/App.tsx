@@ -5,23 +5,23 @@ import Login from "./components/Login";
 import Feed from "./components/Feed";
 import { useAppSelector } from "./hooks/redux";
 import Signup from "./components/Signup";
+import Home from "./components/Home";
 
 function App() {
-  let theme = useAppSelector((state) => state.theme.theme);
-  theme = localStorage.getItem("theme") || theme;
+    let theme = useAppSelector((state) => state.theme.theme);
+    theme = localStorage.getItem("theme") || theme;
     return (
         <div data-theme={theme}>
-          <BrowserRouter basename="/">
-          <Routes>
-            <Route path = "/" element={<Body/>}>
-            <Route path = "/" element={<Feed/>}/>
-            <Route path = "/login" element={<Login/>}/>
-            <Route path = "/signup" element={<Signup/>}/>
-            <Route path = "/profile" element={<Profile/>}/>
-            <Route path = "/feed" element={<Feed/>}/>
-            </Route>
-          </Routes>
-
+            <BrowserRouter basename="/">
+                <Routes>
+                    <Route path="/" element={<Body />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/feed" element={<Feed />} />
+                    </Route>
+                </Routes>
             </BrowserRouter>
         </div>
     );

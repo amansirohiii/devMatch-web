@@ -33,7 +33,7 @@ const Signup = () => {
       }
     };
     fetchAuth();
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   const handleSignup = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -58,7 +58,6 @@ const Signup = () => {
         location: location ? { type: 'Point', coordinates: [location.longitude, location.latitude] } : undefined,
       });
       dispatch(setUser(user.data));
-      console.log("User signed up successfully");
       navigate("/login");
     } catch (error) {
       console.error("Signup error:", error);

@@ -4,6 +4,7 @@ import { User } from "../../types/user";
 const initialState: User = {
   firstName: "",
   lastName: "",
+  email: "",
   photoUrl: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
   age: null,
   gender: "",
