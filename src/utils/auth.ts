@@ -44,7 +44,7 @@ export interface PatchData {
 
 export const checkAuth = async () => {
   try {
-    const response = await axios.get(BASE_URL + "/check-auth", {
+    const response = await axios.get(BASE_URL + "/auth/check-auth", {
       withCredentials: true,
     });
     if (response.status === 200) {
@@ -78,7 +78,7 @@ export const loginUser = async (
       };
 
       // Send a POST request to the API
-      const response = await axios.post(BASE_URL + "/login", loginData, {
+      const response = await axios.post(BASE_URL + "/auth/login", loginData, {
           withCredentials: true,
           headers: {
               "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export const loginUser = async (
 
 export const signUpUser = async (userData: SignupData) => {
   try {
-    const response = await axios.post(BASE_URL + "/signup", userData, {
+    const response = await axios.post(BASE_URL + "/auth/signup", userData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",

@@ -45,7 +45,7 @@ const Signup = () => {
     }
     try {
       const location = await userLocation;
-      const user = await signUpUser({
+      await signUpUser({
         firstName,
         lastName,
         email,
@@ -57,7 +57,6 @@ const Signup = () => {
         skills,
         location: location ? { type: 'Point', coordinates: [location.longitude, location.latitude] } : undefined,
       });
-      dispatch(setUser(user.data));
       navigate("/login");
     } catch (error) {
       console.error("Signup error:", error);

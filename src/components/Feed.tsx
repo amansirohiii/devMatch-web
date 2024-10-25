@@ -11,7 +11,7 @@ const Feed = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getFeed = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/feed", {
+      const res = await axios.get(BASE_URL + "/user/feed", {
         withCredentials: true,
       });
       dispatch(setFeed(res.data));

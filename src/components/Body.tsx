@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useAppDispatch } from "../hooks/redux";
@@ -17,15 +17,19 @@ const Body = () => {
         withCredentials: true,
       });
       dispatch(setUser(res.data));
+      // Optional: You can navigate to feed here if needed
       // navigate("/feed");
     } catch (error: any) {
-      if (error.status === 401) {
+      if (error.response && error.response.status === 401) {
         dispatch(removeUser(null));
-        navigate("/login")
+        navigate("/login");
+        toast.error("Please log in to continue");
+      } else {
+        // Handle other possible errors like network issues or server errors
+        toast.error("An unexpected error occurred");
       }
-      console.log(error);
     }
-  }
+  };
   useEffect(()=>{
     const restrictedPaths = ["/login", "/signup", "/"];
 
@@ -34,7 +38,7 @@ const Body = () => {
       return;
     }
     fetchUser();
-  }, [])
+  }, [navigate]);
     return (
         <>
             <Navbar />

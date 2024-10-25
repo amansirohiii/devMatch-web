@@ -16,7 +16,7 @@ export const useLogout = () => {
       return;
     }
     // if(!window.confirm("Are you sure you want to logout?")) return;
-      await axios.get(BASE_URL + "/logout", {
+      await axios.get(BASE_URL + "/auth/logout", {
         withCredentials: true,
       });
       dispatch(removeUser(null))
