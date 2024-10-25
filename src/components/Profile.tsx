@@ -3,22 +3,22 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { PatchData, patchUser } from '../utils/auth';
 import { setUser } from '../utils/redux/userSlice';
+// import UserCard from "./UserCard";
 
 const Profile = () => {
   const user = useAppSelector(store => store.user);
   const [firstName, setFirstName] = useState(user.firstName || "");
   const [lastName, setLastName] = useState(user.lastName || "");
   const [email, setEmail] = useState(user.email || "");
-  const [password, setPassword] = useState(""); // Empty string to avoid uncontrolled warning
+  const [password, setPassword] = useState("");
   const [age, setAge] = useState(user.age?.toString() || "");
   const [gender, setGender] = useState(user.gender || "");
-  const [photo, setPhoto] = useState<File | null>(null); // Store the file itself
+  const [photo, setPhoto] = useState<File | null>(null);
   const [about, setAbout] = useState(user.about || "");
   const [skills, setSkills] = useState<string[]>(user.skills || []);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
-  // Sync state with Redux store on component mount or store update
   useEffect(() => {
     setFirstName(user.firstName || "");
     setLastName(user.lastName || "");
@@ -53,6 +53,7 @@ const Profile = () => {
   };
 
   return (
+   <>
     <div className="flex justify-center my-10">
   <div className="card bg-base-300 w-full max-w-4xl shadow-xl">
     <div className="card-body">
@@ -193,6 +194,8 @@ const Profile = () => {
     </div>
   </div>
 </div>
+{/* <UserCard {...user} /> */}
+</>
 
   );
 };

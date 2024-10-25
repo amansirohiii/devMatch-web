@@ -17,6 +17,7 @@ const Body = () => {
         withCredentials: true,
       });
       dispatch(setUser(res.data));
+      // navigate("/feed");
     } catch (error: any) {
       if (error.status === 401) {
         dispatch(removeUser(null));
@@ -33,7 +34,7 @@ const Body = () => {
       return;
     }
     fetchUser();
-  }, [location.pathname, dispatch, navigate])
+  }, [])
     return (
         <>
             <Navbar />

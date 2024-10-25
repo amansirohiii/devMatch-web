@@ -8,6 +8,7 @@ import UserCard from "./UserCard";
 const Feed = () => {
   const dispatch = useAppDispatch();
   const feed = useAppSelector(store => store.feed);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getFeed = async () => {
     try {
       const res = await axios.get(BASE_URL + "/feed", {
