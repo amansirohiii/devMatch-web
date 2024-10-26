@@ -4,6 +4,7 @@ import { BASE_URL } from "../utils/constants";
 import { useEffect } from "react";
 import { setRequests } from "../utils/redux/requestsSlice";
 import useRequest from "../hooks/useRequest";
+import { socket } from "../utils/socket";
 
 const Requests = () => {
   const reviewRequest = useRequest();
@@ -21,6 +22,9 @@ const Requests = () => {
         console.error("Connections fetch error:", error);
     }
   }
+  socket.on("newRequest", () => {
+    fetchRequests();
+  });
 useEffect(()=>{
   fetchRequests();
 }, [])

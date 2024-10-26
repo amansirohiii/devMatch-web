@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux"
 import { BASE_URL } from "../utils/constants";
 import { setConnections } from "../utils/redux/connectionsSlice";
 import { useEffect } from "react";
+import { socket } from "../utils/socket";
 
 const Connections = () => {
   const connections = useAppSelector((store) => store.connections);
@@ -17,6 +18,9 @@ const Connections = () => {
         console.error("Connections fetch error:", error);
     }
   }
+  socket.on("newConnection", () => {
+    fetchConnections();
+  });
   useEffect(()=>{
     fetchConnections();
   }, [])
