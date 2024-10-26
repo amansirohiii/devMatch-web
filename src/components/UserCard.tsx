@@ -22,8 +22,8 @@ const UserCard = (user: User) => {
     <p>{user?.skills}</p>
     <p>{distance} km</p>
     <div className="card-actions justify-center my-4 sm:my-0">
-      <button onClick={()=>sendRequest("send", "rejected", user._id)} className="btn btn-primary">Ignore</button>
-      <button onClick={()=>sendRequest("send", "interested", user._id)} className="btn btn-secondary">Interested</button>
+      <button onClick={()=>sendRequest("send", "ignored", user?._id)} className="btn btn-primary">Ignore</button>
+      <button onClick={()=>sendRequest("send", "interested", user?._id)} className="btn btn-secondary">Interested</button>
     </div>
   </div>
 </div>  )

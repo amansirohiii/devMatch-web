@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "./redux";
 import { removeRequest } from "../utils/redux/requestsSlice";
+import { removeFeedUser } from "../utils/redux/feedSlice";
 
 const useRequest = ()=>{
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ const useRequest = ()=>{
     }
     // TODO
     if(status === "interested" || status === "ignored") {
-      dispatch(removeRequest(_id));
+      dispatch(removeFeedUser(_id));
       toast.success(status);
 
     }

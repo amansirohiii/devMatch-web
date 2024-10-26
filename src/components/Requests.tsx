@@ -21,9 +21,10 @@ const Requests = () => {
         console.error("Connections fetch error:", error);
     }
   }
-  useEffect(()=>{
-    fetchRequests();
-  }, [])
+useEffect(()=>{
+  fetchRequests();
+}, [])
+
 
   if (!requests) return;
 
@@ -38,7 +39,7 @@ const Requests = () => {
           const {_id, firstName, lastName, photoUrl} = request.fromUserId;
           return (
 
-           <div key={_id} className=" join-item border-base-300 border">
+           <div key={_id} className=" join-item border-base-300 border my-2">
             <div className="flex flex-row items-center collapse-title ">
             <div className="avatar mr-5">
   <div className="w-20 rounded-full">

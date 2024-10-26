@@ -2,13 +2,23 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import { useLogout } from "../hooks/useLogout";
 import toggleTheme from "./ui/ToggleTheme";
+import { socket } from "../utils/socket";
+import { useState } from "react";
 
 const Navbar = () => {
   const user = useAppSelector((store) => store.user);
   const logout = useLogout();
+  const [requestBadge, setRequestBadge] = useState(false);
+  const [connectionBadge, setConnectionBadge] = useState(false);
   const handleLogout = () => {
      logout();
   }
+  socket.on("newRequest", () => {
+    setRequestBadge(true);
+  });
+  socket.on("newConnection", () => {
+    setConnectionBadge(true);
+  });
 
   return (
 <div className="navbar bg-base-300">
@@ -21,8 +31,7 @@ const Navbar = () => {
     </div> */}
     <ul className="sm:menu sm:menu-horizontal hidden">
 {user.firstName ? ( <> <li><Link to="/feed">Feed</Link></li>
-  <li><Link to="/connections">Connections</Link></li>
-  <li><Link to="/requests">Requests</Link></li></>) :
+  <li className={connectionBadge ? "avatar online" : ""}><Link to="/connections" onClick={()=>setConnectionBadge(false)}>Connections</Link></li>  <li className={requestBadge ? "avatar online" : ""}><Link to="/requests" onClick={()=>setRequestBadge(false)}>Requests</Link></li></>) :
   <>
   <li><Link to="/login">Login</Link></li>
   <li><Link to="/signup">Signup</Link></li>
