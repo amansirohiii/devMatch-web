@@ -19,7 +19,7 @@ export const useLogout = () => {
       await axios.get(BASE_URL + "/auth/logout", {
         withCredentials: true,
       });
-      dispatch(removeUser(null))
+      dispatch(removeUser())
       toast.success("Logout successful");
       navigate("/")
     }
