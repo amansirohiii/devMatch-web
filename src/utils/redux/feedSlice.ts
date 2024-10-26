@@ -7,10 +7,10 @@ const initialState = {
   data,
   message: "",
   pagination: {
-    page: null,
-    limit: null,
-    totalPages: null,
-    totalUsers: null,
+    page: 1,
+    limit: 10,
+    totalPages: 1,
+    totalUsers: 0,
   }
 }
 const feedSlice = createSlice({
