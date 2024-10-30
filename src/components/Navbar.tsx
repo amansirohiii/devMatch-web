@@ -64,7 +64,7 @@ const Navbar = () => {
         <>
         <span className="sm:hidden">
         <li><Link to="/login">Login</Link></li>
-        <li><Link to="/signjup">Signup</Link></li>
+        <li><Link to="/signup">Signup</Link></li>
         </span></>}
       </ul>
     </div>
