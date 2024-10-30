@@ -40,7 +40,7 @@ const Body = () => {
     }
   };
   useEffect(()=>{
-    const restrictedPaths = ["/login", "/signup"];
+    const restrictedPaths = ["/login", "/signup", "/"];
 
     // Prevent API call if the current route is one of the restricted paths
     if (restrictedPaths.includes(location.pathname)) {
